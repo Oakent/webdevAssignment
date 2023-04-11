@@ -4,3 +4,19 @@ ul{
 li{
     display: inline;
 }
+
+#books{
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-wrap: wrap;
+}
+
+.bookcontent{
+    width: 30%;
+}
+
+.cover{
+    width: 200px;
+    height: auto;
+}
