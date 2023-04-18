@@ -10,8 +10,8 @@ div{
 }
 
 .cover{
-    width: 200px;
-    height: auto;
+    width: auto;
+    height: 300px;
     max-width: 100%;
 }
 
