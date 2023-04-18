@@ -6,44 +6,51 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
 
   e.preventDefault();
   let valid;
+  if (
+    validateCVV(cvv) &&
+    validateDate(expMonth, expYear) &&
+    validateNum(cardNum)
+  ) {
+    valid = true;
+  } else {
+    alert("there is an error in one or more of your inputs");
+  }
+  if (valid == true) {
+    const url = "http://mudfoot.doc.stu.mmu.ac.uk/node/api/creditcard";
 
-  if (validateDate(expYear, expMonth))
-    if (valid == true) {
-      const url = "http://mudfoot.doc.stu.mmu.ac.uk/node/api/creditcard";
+    const data = {
+      master_card: cardNum,
+      exp_year: expYear,
+      exp_month: expMonth,
+      cvv_code: cvv,
+    };
 
-      const data = {
-        master_card: cardNum,
-        exp_year: expYear,
-        exp_month: expMonth,
-        cvv_code: cvv,
-      };
-
-      fetch(url, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+    fetch(url, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          return response.json();
+        } else if (response.status === 400) {
+          throw "Bad data was sent to server.";
+        } else {
+          throw "Something went wrong";
+        }
       })
-        .then((response) => {
-          if (response.status === 201) {
-            return response.json();
-          } else if (response.status === 400) {
-            throw "Bad data was sent to server.";
-          } else {
-            throw "Something went wrong";
-          }
-        })
-        .then((resJson) => {
-          alert("payment sucsessful");
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    }
+      .then((resJson) => {
+        alert("payment sucsessful");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 });
 
-validateDate = (expYear, expMonth) => {
+validateDate = (expMonth, expYear) => {
   const d = new Date();
   let thisYear = d.getFullYear();
   let month = d.getMonth() + 1;
