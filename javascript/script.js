@@ -6,11 +6,10 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
 
   e.preventDefault();
   let valid;
-  if (
-    validateCVV(cvv) &&
-    validateDate(expMonth, expYear) &&
-    validateNum(cardNum)
-  ) {
+  let cvvValid = validateCVV(cvv);
+  let dateValid = validateDate(expMonth, expYear);
+  let numberValid = validateNum(cardNum);
+  if (cvvValid && dateValid && numberValid) {
     valid = true;
   } else {
     alert("there is an error in one or more of your inputs");
@@ -19,11 +18,13 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
     const url = "http://mudfoot.doc.stu.mmu.ac.uk/node/api/creditcard";
 
     const data = {
-      master_card: cardNum,
-      exp_year: expYear,
-      exp_month: expMonth,
-      cvv_code: cvv,
+      master_card: parseInt(cardNum),
+      exp_year: parseInt(expYear),
+      exp_month: parseInt(expMonth),
+      cvv_code: String(cvv),
     };
+
+    console.log(data);
 
     fetch(url, {
       method: "post",
@@ -33,16 +34,16 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        if (response.status === 201) {
+        if (response.status === 200) {
           return response.json();
         } else if (response.status === 400) {
           throw "Bad data was sent to server.";
         } else {
-          throw "Something went wrong";
+          throw "Something went wrong" + response.status;
         }
       })
       .then((resJson) => {
-        alert("payment sucsessful");
+        alert("payment successful");
       })
       .catch((error) => {
         alert(error);
