@@ -6,15 +6,21 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
 
   e.preventDefault();
   let valid;
+  let errMsg = "The following input(s) contain errors:";
   let cvvValid = validateCVV(cvv);
   let dateValid = validateDate(expMonth, expYear);
   let numberValid = validateNum(cardNum);
+  errMsg = !cvvValid ? (errMsg += " CVV") : errMsg;
+  errMsg = !dateValid ? (errMsg += " date") : errMsg;
+  errMsg = !numberValid ? (errMsg += " card number") : errMsg;
   if (cvvValid && dateValid && numberValid) {
     valid = true;
   } else {
-    alert("there is an error in one or more of your inputs");
+    alert(errMsg);
   }
   if (valid == true) {
+    cardStr = cardNum.toString();
+    const lastNum = cardStr.substring(12, 16);
     const url = "http://mudfoot.doc.stu.mmu.ac.uk/node/api/creditcard";
 
     const data = {
@@ -43,7 +49,7 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
         }
       })
       .then((resJson) => {
-        alert("payment successful");
+        location.href = "success.html?num=" + lastNum;
       })
       .catch((error) => {
         alert(error);

@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="../javascript/script.js"></script>
     <title>Succsess</title>
   </head>
   <body>
@@ -14,5 +13,17 @@
       <li><a href=".">About us</a></li>
       <li><a href=".">Contact us</a></li>
     </ul>
+    <script>
+      let url = location.href;
+      let last4 = url.substring(url.length - 4, url.length + 1);
+      console.log(last4);
+    </script>
+    <p>You have successfully entered your credit card details</p>
+    <br />
+    <p id="card">Your credit card ends in</p>
+    <script>
+      let card = document.getElementById("card");
+      card.innerHTML += " " + last4;
+    </script>
   </body>
 </html>
