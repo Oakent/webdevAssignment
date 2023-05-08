@@ -23,6 +23,7 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
     ? numElement.classList.add("inputError")
     : numElement.classList.remove("inputError");
   if (cvvValid && dateValid && numberValid) {
+    errMsgElement.innerHTML = "";
     valid = true;
   } else {
     errMsgElement.innerHTML = errMsg;
@@ -50,6 +51,7 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
     })
       .then((response) => {
         if (response.status === 200) {
+          console.log(response);
           return response.json();
         } else if (response.status === 400) {
           throw "Bad data was sent to server.";
@@ -58,7 +60,7 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
         }
       })
       .then((resJson) => {
-        location.href = "success.html?num=" + lastNum;
+        //location.href = "success.html?num=" + lastNum;
       })
       .catch((error) => {
         alert(error);
@@ -75,9 +77,9 @@ validateDate = (expMonth, expYear) => {
   expYear >= thisYear
     ? yearElement.classList.remove("inputError")
     : yearElement.classList.add("inputError");
-  month < expMonth && thisYear == expYear
-    ? monthElement.classList.remove("inputError")
-    : monthElement.classList.add("inputError");
+  month > expMonth && thisYear == expYear
+    ? monthElement.classList.add("inputError")
+    : monthElement.classList.remove("inputError");
   if (expYear > thisYear || (expYear == thisYear && month <= expMonth)) {
     return true;
   } else {
@@ -86,7 +88,7 @@ validateDate = (expMonth, expYear) => {
 };
 
 validateCVV = (cvv) => {
-  const cvvReg = /\d{3,4}/;
+  const cvvReg = /^\d{3,4}$/;
   return cvvReg.test(cvv);
 };
 
