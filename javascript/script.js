@@ -39,7 +39,7 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
       cvv_code: String(cvv),
     };
 
-    console.log(data);
+    console.log(JSON.stringify(data));
 
     fetch(url, {
       method: "post",
