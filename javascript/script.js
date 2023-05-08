@@ -4,6 +4,9 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
   let expYear = document.getElementById("expYear").value;
   let cvv = document.getElementById("cvv").value;
 
+  let cvvElement = document.getElementById("cvv");
+  let numElement = document.getElementById("cardNum");
+  let errMsgElement = document.getElementById("errMsg");
   e.preventDefault();
   let valid;
   let errMsg = "The following input(s) contain errors:";
@@ -13,10 +16,16 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
   errMsg = !cvvValid ? (errMsg += " CVV") : errMsg;
   errMsg = !dateValid ? (errMsg += " date") : errMsg;
   errMsg = !numberValid ? (errMsg += " card number") : errMsg;
+  !cvvValid
+    ? cvvElement.classList.add("inputError")
+    : cvvElement.classList.remove("inputError");
+  !numberValid
+    ? numElement.classList.add("inputError")
+    : numElement.classList.remove("inputError");
   if (cvvValid && dateValid && numberValid) {
     valid = true;
   } else {
-    alert(errMsg);
+    errMsgElement.innerHTML = errMsg;
   }
   if (valid == true) {
     cardStr = cardNum.toString();
@@ -58,9 +67,17 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
 });
 
 validateDate = (expMonth, expYear) => {
+  let monthElement = document.getElementById("expMonth");
+  let yearElement = document.getElementById("expYear");
   const d = new Date();
   let thisYear = d.getFullYear();
   let month = d.getMonth() + 1;
+  expYear >= thisYear
+    ? yearElement.classList.remove("inputError")
+    : yearElement.classList.add("inputError");
+  month < expMonth && thisYear == expYear
+    ? monthElement.classList.remove("inputError")
+    : monthElement.classList.add("inputError");
   if (expYear > thisYear || (expYear == thisYear && month <= expMonth)) {
     return true;
   } else {

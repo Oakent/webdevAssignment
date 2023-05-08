@@ -35,11 +35,11 @@
     </script>
     <br />
     <form>
-      <label for="cardNum">Card number: </label>
-      <input type="number" name="cardNum" id="cardNum" />
+      <label for="cardNum" class="formInput">Card number: </label>
+      <input type="number" name="cardNum" id="cardNum" class="formInput" />
       <br />
-      <label for="expDate">Expiry date</label>
-      <select name="expMonth" id="expMonth">
+      <label for="expDate" class="formInput">Expiry date</label>
+      <select name="expMonth" id="expMonth" class="formInput">
         <option value="Month">Month</option>
         <option value="01">01</option>
         <option value="02">02</option>
@@ -54,7 +54,7 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <select name="expYear" id="expYear">
+      <select name="expYear" id="expYear" class="formInput">
         <option value="Year">Year</option>
         <option value="2023">2023</option>
         <option value="2024">2024</option>
@@ -66,7 +66,7 @@
       <label for="cvv">Security code</label>
       <input type="text" name="cvv" id="cvv" />
       <p>(3-4 digit code normally on the back of your card)</p>
-      <br />
+      <p id="errMsg"></p>
       <button id="btnPay" type="submit">Continue</button>
     </form>
   </body>

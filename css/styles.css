@@ -20,9 +20,12 @@ li{
     box-sizing: border-box;
 }
 
-
+.formInput{
+  margin-bottom: 5px;
+}
 .inputError{
-  
+  outline: orangered 2px;
+  outline-style: dashed;
 }
 
 .column {
