@@ -60,7 +60,7 @@ document.getElementById("btnPay").addEventListener("click", (e) => {
         }
       })
       .then((resJson) => {
-        //location.href = "success.html?num=" + lastNum;
+        location.href = "success.html?num=" + lastNum;
       })
       .catch((error) => {
         alert(error);
