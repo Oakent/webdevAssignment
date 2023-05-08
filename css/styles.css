@@ -20,6 +20,11 @@ li{
     box-sizing: border-box;
 }
 
+
+.inputError{
+  
+}
+
 .column {
     float: left;
     width: 50%;
